@@ -1,5 +1,6 @@
 incubator/
-vendor/
+vendor/*
+!vendor/PINS.json
 work/*/*/wt/
 work/*/*/out/
 work/*/*/logs/*
