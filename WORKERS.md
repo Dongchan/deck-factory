@@ -55,7 +55,26 @@ PLAN.md는 워커 역할(codex=코드, opus=판단 게이트, sonnet=테스트, 
 
 ## 1. 워커 유형과 실행 기반
 
-### 1.1 codex 워커 — 코드 구현
+### 1.0 모델 예산 원칙 — codex 우선 (2026-07-03 사용자 지시로 개정)
+
+기본 워커는 codex다. 코드 구현만이 아니라 조사·진단·문서 수정·감사·크리틱·리팩터 등
+"답을 찾는" 작업 전부를 codex exec로 먼저 보낸다
+(분석·조사는 -s read-only, 수정은 -s workspace-write).
+Phase 0 계획 단계에서 실증됨 — 계획 적대심사·재심사 6회를 전부 codex가 수행했고 품질이 유지됐다.
+
+claude 계열은 codex가 구조적으로 못 하는 것에만 쓴다:
+- opus 판정: 5.4 hard 게이트 전용. 실행도 서브에이전트가 아니라
+  judge_harness.py + judge-cmds/judge_opus.sh(claude -p 헤드리스) 경유가 표준 —
+  Phase 0 승격 재판정에서 실증됨. codex에게 게이트 판정을 시키지 않는 원칙은 유지
+  (판정 품질이 계약이므로).
+- 웹 증거 수집: 브라우저/MCP/우회가 필요한 리서치(라이선스 스냅샷 등)만 claude 워커.
+  codex 샌드박스는 네트워크가 막혀 있고, 안전 규정상 bypass를 쓰지 않기 때문.
+- 테스트 작성(구 sonnet 몫): 기본 codex로 대체한다. red-first 격리 요건은
+  "구현과 다른 codex 세션 + allowedWritePaths 분리"로 충족한다 (1.2의 순서 규칙은 동일 적용).
+
+fable(메인 세션)은 1.3의 4역할(브리프·스폰/회수·게이트 소집·통합) 밖의 일을 직접 하지 않는다.
+특히 3턴 이상 걸릴 조사·진단·수정은 fable이 bash로 파고들지 말고 codex read-only 태스크로 위임한다.
+게이트 확인(expectedCommand 1회 실행, 마커 기록)은 예외 — 위임 왕복이 더 비싸다.
 
 실행 명령 (T0-9 wrapper 경유가 표준. 직접 호출 시에도 아래 형식 준수):
 
