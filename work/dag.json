@@ -1,5 +1,5 @@
 {
- "version": "0.2.0-phase1-wave1",
+ "version": "0.3.0-phase1-wave2",
  "note": "Phase 0 서브셋. dag.schema.json과 러너 강제는 T0-10 산출물이 담당하며, 그 전까지 fable이 이 파일을 수동 정본으로 사용한다. Phase 1 이후 태스크는 T0-10 integrated 후 WORKERS.md 5절 분배표에서 확장한다.",
  "tasks": [
   {
@@ -367,6 +367,158 @@
    ],
    "consumes": [
     "incubator/packages/deck-grader/src/"
+   ],
+   "sharedFiles": [],
+   "dynamicChildren": null,
+   "determinismClass": "deterministic",
+   "mode": "attended"
+  },
+  {
+   "id": "T1-2-apple",
+   "taskType": "code",
+   "worker": "codex",
+   "needs": [
+    "T1-1-validators",
+    "T0-8-judgment-infra"
+   ],
+   "produces": [
+    "incubator/packages/deck-tokens/presets/apple/"
+   ],
+   "consumes": [
+    "incubator/contracts/tokens.schema.json"
+   ],
+   "sharedFiles": [],
+   "dynamicChildren": null,
+   "determinismClass": "deterministic",
+   "mode": "attended"
+  },
+  {
+   "id": "T1-2-linear",
+   "taskType": "code",
+   "worker": "codex",
+   "needs": [
+    "T1-1-validators",
+    "T0-8-judgment-infra"
+   ],
+   "produces": [
+    "incubator/packages/deck-tokens/presets/linear/"
+   ],
+   "consumes": [
+    "incubator/contracts/tokens.schema.json"
+   ],
+   "sharedFiles": [],
+   "dynamicChildren": null,
+   "determinismClass": "deterministic",
+   "mode": "attended"
+  },
+  {
+   "id": "T1-2-notion",
+   "taskType": "code",
+   "worker": "codex",
+   "needs": [
+    "T1-1-validators",
+    "T0-8-judgment-infra"
+   ],
+   "produces": [
+    "incubator/packages/deck-tokens/presets/notion/"
+   ],
+   "consumes": [
+    "incubator/contracts/tokens.schema.json"
+   ],
+   "sharedFiles": [],
+   "dynamicChildren": null,
+   "determinismClass": "deterministic",
+   "mode": "attended"
+  },
+  {
+   "id": "T1-2-stripe",
+   "taskType": "code",
+   "worker": "codex",
+   "needs": [
+    "T1-1-validators",
+    "T0-8-judgment-infra"
+   ],
+   "produces": [
+    "incubator/packages/deck-tokens/presets/stripe/"
+   ],
+   "consumes": [
+    "incubator/contracts/tokens.schema.json"
+   ],
+   "sharedFiles": [],
+   "dynamicChildren": null,
+   "determinismClass": "deterministic",
+   "mode": "attended"
+  },
+  {
+   "id": "T1-2-vercel",
+   "taskType": "code",
+   "worker": "codex",
+   "needs": [
+    "T1-1-validators",
+    "T0-8-judgment-infra"
+   ],
+   "produces": [
+    "incubator/packages/deck-tokens/presets/vercel/"
+   ],
+   "consumes": [
+    "incubator/contracts/tokens.schema.json"
+   ],
+   "sharedFiles": [],
+   "dynamicChildren": null,
+   "determinismClass": "deterministic",
+   "mode": "attended"
+  },
+  {
+   "id": "T1-2-toss-principles",
+   "taskType": "code",
+   "worker": "codex",
+   "needs": [
+    "T1-1-validators",
+    "T0-8-judgment-infra"
+   ],
+   "produces": [
+    "incubator/packages/deck-tokens/presets/toss-principles/"
+   ],
+   "consumes": [
+    "incubator/contracts/tokens.schema.json"
+   ],
+   "sharedFiles": [],
+   "dynamicChildren": null,
+   "determinismClass": "deterministic",
+   "mode": "attended"
+  },
+  {
+   "id": "T1-2-krds",
+   "taskType": "code",
+   "worker": "codex",
+   "needs": [
+    "T1-1-validators",
+    "T0-8-judgment-infra"
+   ],
+   "produces": [
+    "incubator/packages/deck-tokens/presets/krds/"
+   ],
+   "consumes": [
+    "incubator/contracts/tokens.schema.json"
+   ],
+   "sharedFiles": [],
+   "dynamicChildren": null,
+   "determinismClass": "deterministic",
+   "mode": "attended"
+  },
+  {
+   "id": "T1-2-kr-pick",
+   "taskType": "code",
+   "worker": "codex",
+   "needs": [
+    "T1-1-validators",
+    "T0-8-judgment-infra"
+   ],
+   "produces": [
+    "incubator/packages/deck-tokens/presets/kr-pick/"
+   ],
+   "consumes": [
+    "incubator/contracts/tokens.schema.json"
    ],
    "sharedFiles": [],
    "dynamicChildren": null,
