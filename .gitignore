@@ -1,0 +1,6 @@
+incubator/
+vendor/
+work/*/*/wt/
+work/*/*/out/
+work/*/*/logs/*
+!work/*/*/logs/run.log.json
