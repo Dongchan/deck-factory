@@ -1,6 +1,6 @@
 # TASK T1-5-cover-section
 ## 메타
-taskType: code / determinismClass: deterministic / mode: attended / baseCommit: 4ec14e2a83e94cff48c4d422c9377e70204950eb / schemaVersion: v0.1.0-draft
+taskType: code / determinismClass: deterministic / mode: attended / baseCommit: 81fe8ce9be973312e1b9c0e5ff3e027f33763f57 / schemaVersion: v0.1.0-draft
 ## 목표
 레이아웃 템플릿 묶음 "cover-section" 를 구현한다 — 커버·섹션 계열 4종: 타이틀 커버, 서브타이틀 커버, 섹션 구분(대형 번호+제목), 목차. 제목 좌표 1% 규칙의 명시적 예외군 (PLAN 반영 사항)
 각 템플릿: (1) incubator/contracts/slide-html.contract.md 규약을 따르는 템플릿 HTML

@@ -1,6 +1,6 @@
 # TASK T1-5-data-chart
 ## 메타
-taskType: code / determinismClass: deterministic / mode: attended / baseCommit: 4ec14e2a83e94cff48c4d422c9377e70204950eb / schemaVersion: v0.1.0-draft
+taskType: code / determinismClass: deterministic / mode: attended / baseCommit: 81fe8ce9be973312e1b9c0e5ff3e027f33763f57 / schemaVersion: v0.1.0-draft
 ## 목표
 레이아웃 템플릿 묶음 "data-chart" 를 구현한다 — 데이터 계열 4종: 차트 단독(차트 슬롯+출처 슬롯 페어), 차트+해설 2분할, KPI 빅넘버 3분할, 표 대체 카드 그리드. 수치 슬라이드는 source 슬롯 필수 바인딩
 각 템플릿: (1) incubator/contracts/slide-html.contract.md 규약을 따르는 템플릿 HTML

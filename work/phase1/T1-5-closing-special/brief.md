@@ -1,6 +1,6 @@
 # TASK T1-5-closing-special
 ## 메타
-taskType: code / determinismClass: deterministic / mode: attended / baseCommit: 4ec14e2a83e94cff48c4d422c9377e70204950eb / schemaVersion: v0.1.0-draft
+taskType: code / determinismClass: deterministic / mode: attended / baseCommit: 81fe8ce9be973312e1b9c0e5ff3e027f33763f57 / schemaVersion: v0.1.0-draft
 ## 목표
 레이아웃 템플릿 묶음 "closing-special" 를 구현한다 — 클로징·특수 계열 4종: 빅스탯(초대형 숫자), 인용 단독, 요약+CTA 클로징, Q&A/땡큐. 커버류와 함께 제목 좌표 예외군
 각 템플릿: (1) incubator/contracts/slide-html.contract.md 규약을 따르는 템플릿 HTML

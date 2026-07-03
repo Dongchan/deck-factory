@@ -1,6 +1,6 @@
 # TASK T1-5-image-visual
 ## 메타
-taskType: code / determinismClass: deterministic / mode: attended / baseCommit: 4ec14e2a83e94cff48c4d422c9377e70204950eb / schemaVersion: v0.1.0-draft
+taskType: code / determinismClass: deterministic / mode: attended / baseCommit: 81fe8ce9be973312e1b9c0e5ff3e027f33763f57 / schemaVersion: v0.1.0-draft
 ## 목표
 레이아웃 템플릿 묶음 "image-visual" 를 구현한다 — 이미지 계열 4종: 풀블리드 이미지+텍스트 오버레이(textSafeRegions 존중), 이미지+텍스트 2분할, 이미지 3그리드, 인용+배경이미지. 오버레이 대비 확보 구조 필수
 각 템플릿: (1) incubator/contracts/slide-html.contract.md 규약을 따르는 템플릿 HTML
