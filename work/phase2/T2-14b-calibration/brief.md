@@ -1,6 +1,6 @@
 # TASK T2-14b-calibration (needs: T2-14a)
 ## 메타
-taskType: code / determinismClass: canonicalized / mode: attended / baseCommit: (T2-14a 통합 후 갱신)
+taskType: code / determinismClass: canonicalized / mode: attended / baseCommit: 63ef27cfb8d878a0badcf3e40131887d0e56a42e
 ## 목표
 1단계 캘리브레이션: (1) synthetic 골든셋(calibration/ 20샘플 + calibration-semantic)과
 examples/demo-phase1 덱을 T2-14a 집계기로 전수 채점, (2) 라벨 대비 점수 분포 리포트
