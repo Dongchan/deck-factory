@@ -1,5 +1,5 @@
 {
- "version": "0.3.1-phase1-wave3a",
+ "version": "0.3.2-phase1-wave3b",
  "note": "Phase 0 서브셋. dag.schema.json과 러너 강제는 T0-10 산출물이 담당하며, 그 전까지 fable이 이 파일을 수동 정본으로 사용한다. Phase 1 이후 태스크는 T0-10 integrated 후 WORKERS.md 5절 분배표에서 확장한다.",
  "tasks": [
   {
@@ -538,6 +538,111 @@
    ],
    "consumes": [
     "incubator/contracts/deck-constants.json"
+   ],
+   "sharedFiles": [],
+   "dynamicChildren": null,
+   "determinismClass": "deterministic",
+   "mode": "attended"
+  },
+  {
+   "id": "T1-5-cover-section",
+   "taskType": "code",
+   "worker": "codex",
+   "needs": [
+    "T1-4-capacity",
+    "T1-6-overflow-checker",
+    "T1-2-vercel",
+    "T0-8-judgment-infra"
+   ],
+   "produces": [
+    "incubator/packages/deck-layouts/templates/cover-section/"
+   ],
+   "consumes": [
+    "incubator/contracts/layout-manifest.schema.json"
+   ],
+   "sharedFiles": [],
+   "dynamicChildren": null,
+   "determinismClass": "deterministic",
+   "mode": "attended"
+  },
+  {
+   "id": "T1-5-text-content",
+   "taskType": "code",
+   "worker": "codex",
+   "needs": [
+    "T1-4-capacity",
+    "T1-6-overflow-checker",
+    "T1-2-vercel",
+    "T0-8-judgment-infra"
+   ],
+   "produces": [
+    "incubator/packages/deck-layouts/templates/text-content/"
+   ],
+   "consumes": [
+    "incubator/contracts/layout-manifest.schema.json"
+   ],
+   "sharedFiles": [],
+   "dynamicChildren": null,
+   "determinismClass": "deterministic",
+   "mode": "attended"
+  },
+  {
+   "id": "T1-5-data-chart",
+   "taskType": "code",
+   "worker": "codex",
+   "needs": [
+    "T1-4-capacity",
+    "T1-6-overflow-checker",
+    "T1-2-vercel",
+    "T0-8-judgment-infra"
+   ],
+   "produces": [
+    "incubator/packages/deck-layouts/templates/data-chart/"
+   ],
+   "consumes": [
+    "incubator/contracts/layout-manifest.schema.json"
+   ],
+   "sharedFiles": [],
+   "dynamicChildren": null,
+   "determinismClass": "deterministic",
+   "mode": "attended"
+  },
+  {
+   "id": "T1-5-image-visual",
+   "taskType": "code",
+   "worker": "codex",
+   "needs": [
+    "T1-4-capacity",
+    "T1-6-overflow-checker",
+    "T1-2-vercel",
+    "T0-8-judgment-infra"
+   ],
+   "produces": [
+    "incubator/packages/deck-layouts/templates/image-visual/"
+   ],
+   "consumes": [
+    "incubator/contracts/layout-manifest.schema.json"
+   ],
+   "sharedFiles": [],
+   "dynamicChildren": null,
+   "determinismClass": "deterministic",
+   "mode": "attended"
+  },
+  {
+   "id": "T1-5-closing-special",
+   "taskType": "code",
+   "worker": "codex",
+   "needs": [
+    "T1-4-capacity",
+    "T1-6-overflow-checker",
+    "T1-2-vercel",
+    "T0-8-judgment-infra"
+   ],
+   "produces": [
+    "incubator/packages/deck-layouts/templates/closing-special/"
+   ],
+   "consumes": [
+    "incubator/contracts/layout-manifest.schema.json"
    ],
    "sharedFiles": [],
    "dynamicChildren": null,
