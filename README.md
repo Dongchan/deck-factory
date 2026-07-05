@@ -20,7 +20,7 @@
 
 **▶ Watch the full films:**
 [Hook · 30s](https://github.com/kimsh-1/deck-factory/releases/download/showcase-v1/01-hook-30s.mp4) ·
-[Making-of · 53s](https://github.com/kimsh-1/deck-factory/releases/download/showcase-v1/02-making-53s.mp4) ·
+[Making-of · 40s](https://github.com/kimsh-1/deck-factory/releases/download/showcase-v1/02-making.mp4) ·
 [Usage · 30s](https://github.com/kimsh-1/deck-factory/releases/download/showcase-v1/03-usage-30s.mp4)
 
 </div>

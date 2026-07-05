@@ -20,7 +20,7 @@
 
 **▶ 풀 영상 보기:**
 [Hook · 30s](https://github.com/kimsh-1/deck-factory/releases/download/showcase-v1/01-hook-30s.mp4) ·
-[제작기 · 53s](https://github.com/kimsh-1/deck-factory/releases/download/showcase-v1/02-making-53s.mp4) ·
+[제작기 · 40s](https://github.com/kimsh-1/deck-factory/releases/download/showcase-v1/02-making.mp4) ·
 [사용법 · 30s](https://github.com/kimsh-1/deck-factory/releases/download/showcase-v1/03-usage-30s.mp4)
 
 </div>
