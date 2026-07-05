@@ -1,39 +1,138 @@
+<!-- Language switcher -->
+**English** | [한국어](README.ko.md)
+
+<div align="center">
+
 # deck-factory
 
-브리프 한 줄로 발표용 HTML 덱을 만들어내는 파이프라인 프로젝트의 계획·실행 상태 리포지토리다.
-실제 코드는 [deck-factory-incubator](https://github.com/kimsh-1/deck-factory-incubator)에 있고,
-이 리포는 그 코드가 왜 이 모양인지의 정본을 담는다.
+**One line of intent → a presentation-grade, dark-editorial HTML deck.**
 
-핵심 목표는 셋이다.
-발표장 뒷자리에서 안 읽히는 작은 글씨가 절대 나오지 않을 것.
-수치가 있는 슬라이드는 출처 없이 통과하지 못할 것.
-품질 미달 덱이 조용히 final로 나가는 경로가 존재하지 않을 것.
+[![Stars](https://img.shields.io/github/stars/kimsh-1/deck-factory?style=flat&color=6E7BF2&labelColor=08090A)](https://github.com/kimsh-1/deck-factory/stargazers)
+[![License: MIT](https://img.shields.io/badge/License-MIT-6E7BF2?style=flat&labelColor=08090A)](LICENSE)
+[![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-6E7BF2?style=flat&labelColor=08090A)](skills/deck-factory/SKILL.md)
+[![Made with Claude](https://img.shields.io/badge/Made%20with-Claude-6E7BF2?style=flat&labelColor=08090A)](https://claude.com/claude-code)
 
-## 문서
+</div>
 
-- PLAN.md — 마스터플랜 정본. 레이어 아키텍처(L0 토큰 → L1 생성기 → L2 조립기 → L3 오케스트레이터),
-  파일 핸드오프 계약 22종, 품질 게이트 체계, 실행 로드맵(Phase 0~5).
-  내부 크리틱 3라운드와 codex 적대심사 2회를 통과한 버전이다.
-- WORKERS.md — 워커 실행 계획서. 태스크 분해 원칙(크기 상한 포함), 브리프 표준 포맷,
-  produced → gated → merged → integrated 상태 규약, DAG 정본, 실패 회수 절차.
-  codex 적대심사 2회 통과.
-- research/ — 착수 전 리서치 10건 (토스 디자인 자산, Astryx, 국내 디자인시스템,
-  차트 라이브러리 12종, 컨설팅 덱 품질 기준, 스킬 아키텍처 등).
-- work/ — 태스크별 실행 상태의 정본. 브리프, 게이트 통과 증거(passed.json),
-  통합 마커(done), opus 판정 기록(verdict/). 파일이 곧 상태라는 원칙으로,
-  세션이 끊겨도 이 디렉토리만으로 어느 지점에서든 재개할 수 있다.
+<div align="center">
 
-## 빌드 방식
+![deck-factory in motion](docs/media/hero.gif)
 
-사람이 코드를 짜지 않았다. 오케스트레이터(Claude)가 태스크 브리프를 파일로 쓰고,
-codex 워커가 구현하고, 게이트(테스트 재실행 + opus 3표 다수결 판정)를 통과한 산출물만
-통합하는 방식으로 Phase 0~4를 진행했다. 판정자는 캘리브레이션 셋 사전검증(일치율 0.9 이상)을
-통과해야 hard 게이트에 투입된다.
+**▶ Watch the full films:**
+[Hook · 30s](https://github.com/kimsh-1/deck-factory/releases/download/showcase-v1/01-hook-30s.mp4) ·
+[Making-of · 53s](https://github.com/kimsh-1/deck-factory/releases/download/showcase-v1/02-making-53s.mp4) ·
+[Usage · 30s](https://github.com/kimsh-1/deck-factory/releases/download/showcase-v1/03-usage-30s.mp4)
 
-## 진행 상태 (2026-07-03 기준)
+</div>
 
-Phase 0(기반)·1(파운데이션)·2(생성기)·3(조립기)·4의 1차(모션 제외 E2E)까지 완료.
-실제 브리프 한 줄이 storyline → copy → plan → compose → grader(94.75점) → export를
-관통해 draft 덱(PNG/PDF/PPTX)을 산출하는 것까지 실증됐다.
-남은 것은 모션 트랙(시스템 패키지 필요), draft에서 final로의 마감 품질,
-그리고 Phase 5 상업성 검증(상용 도구 블라인드 비교)이다.
+---
+
+## What is this?
+
+You know the pain: it's midnight before the review, and you're still nudging text boxes, fighting gray cards, and shrinking fonts nobody in the back row will read. **deck-factory** replaces that grind with a design system. Give it one sentence about what you want to say, and it builds the front-of-house — a dark-editorial deck with giant numbers, four-corner chrome, hairline structure, and zero amateur boxes — the way Apple, Linear, and Stripe keynotes actually look.
+
+The verified deliverable today: **12 premium slides + 3 motion-graphics films**, all built from this design system. The full generation pipeline (below) is the roadmap that automates it end to end.
+
+## Quick start
+
+```bash
+# 1. Add the plugin marketplace
+/plugin marketplace add kimsh-1/deck-factory
+
+# 2. Install the skill
+/plugin install deck-factory@deck-factory
+
+# 3. Call it with one sentence
+/deck-factory "Series A IR deck, 12 slides, why our retention curve wins"
+```
+
+> Installation via the plugin marketplace is the intended path. The design system and skill are real and ready to use; the fully-automated one-command pipeline is being wired up (see [How it works](#how-it-works)).
+
+## Features
+
+| | |
+|---|---|
+| **Dark-editorial design system** | near-black `#08090A` canvas, lavender-blue `#6E7BF2` + cyan `#43C7F4` accents, Pretendard, giant stat numbers. |
+| **`no_box` · giant numbers · four-corner chrome** | no gray filler cards — structure comes from hairlines and a surface ladder. 120px+ stat numbers with value > label > context hierarchy. |
+| **Quality gate — by design** | 47 deterministic checks across 6 weighted categories (typography, structure, trust, data-viz, color, alignment), a 90-point pass line, and 7 hard-fail thresholds. Autoscoring is calibration-pending; the gate is designed so a sub-grade deck can't quietly reach `final`. |
+| **Real Chromium render** | slides are laid out in HTML/CSS and rendered by an actual browser engine — what you see is what exports. |
+| **8 style presets** | `apple` · `linear` · `notion` · `stripe` · `vercel` · `krds` · `toss-principles` · `kr-pick`. |
+| **CJK-safe** | `keep-all` line-breaking and Hangul break rules — no text shattering mid-syllable. |
+
+## Gallery
+
+Twelve slides, one design system. This is the proof.
+
+| | | |
+|:-:|:-:|:-:|
+| ![Slide 1](docs/gallery/slide-01.jpg) | ![Slide 2](docs/gallery/slide-02.jpg) | ![Slide 3](docs/gallery/slide-03.jpg) |
+| ![Slide 4](docs/gallery/slide-04.jpg) | ![Slide 5](docs/gallery/slide-05.jpg) | ![Slide 6](docs/gallery/slide-06.jpg) |
+
+<details>
+<summary><b>Show all 12 slides</b></summary>
+
+| | | |
+|:-:|:-:|:-:|
+| ![Slide 7](docs/gallery/slide-07.jpg) | ![Slide 8](docs/gallery/slide-08.jpg) | ![Slide 9](docs/gallery/slide-09.jpg) |
+| ![Slide 10](docs/gallery/slide-10.jpg) | ![Slide 11](docs/gallery/slide-11.jpg) | ![Slide 12](docs/gallery/slide-12.jpg) |
+
+</details>
+
+## How it works
+
+![Pipeline](docs/media/pipeline.png)
+
+The design system is here today. The pipeline below is the vision that turns one sentence into a finished deck automatically — a six-stage chain where each stage hands off a file the next one verifies:
+
+1. **storyline** — gather sources and claims from your one-line brief.
+2. **copy** — write action titles (declarative, ending in a period — never noun lists).
+3. **compose** — deterministically assemble slides from a fixed layout vocabulary (the model writes content; code owns coordinates, color, and z-order).
+4. **grade** — run the quality gate; anything below the pass line is quarantined as `draft`, never silently promoted.
+5. **render** — lay out and paint via a real Chromium engine.
+6. **export** — emit PNG / PDF / PPTX.
+
+Stages storyline through render/export exist as working code in the incubator; end-to-end autoscoring and the final polish pass are the remaining calibration work.
+
+## Design system
+
+The whole look reduces to a few enforced tokens — the skill is the source of truth:
+
+- **Canvas** — `--bg-0: #08090A` (near-black, never pure black), with a surface ladder `#101113 → #1A1B1E → #232427` for depth instead of drop shadows.
+- **Accent** — lavender-blue `#6E7BF2` and cyan `#43C7F4`, one accent moment per slide.
+- **Ink** — `#FFFFFF` / `#A1A1A6` / `#6B6B70`, a three-step foreground hierarchy.
+- **Type** — Pretendard, aggressive negative tracking on display, ≤ 3 font sizes per slide.
+- **Structure** — `no_box`, alpha-white hairlines, four-corner chrome (brand chip · section · author · page), one dominant object per slide.
+
+→ Full contract: [`skills/deck-factory/SKILL.md`](skills/deck-factory/SKILL.md)
+
+## Repository layout
+
+```
+deck-factory/
+├── skills/deck-factory/     # the skill — SKILL.md + assets/styles.css
+├── docs/
+│   ├── media/               # hero.gif, pipeline.png
+│   └── gallery/             # slide-01.jpg … slide-12.jpg
+├── videos/                  # the three motion-graphics films
+├── design/                  # DECK-STANDARD.md — the quality contract (SSOT)
+└── incubator/               # pipeline code: deck-grader, deck-tokens, deck-editor
+```
+
+**Customizing:** pick a preset (`/deck-factory "… preset: linear"`), or edit the token values in the skill's stylesheet to retune the palette. Presets change structure and signature devices; color always resolves through token variables.
+
+## Credits & license
+
+Released under the [MIT License](LICENSE).
+
+- **Font** — [Pretendard](https://github.com/orioncactus/pretendard) (SIL Open Font License).
+- **Motion** — [GSAP](https://gsap.com) and HyperFrames for the showcase films.
+
+---
+
+<div align="center">
+
+Built with [Claude Code](https://claude.com/claude-code) — powered by the [deck-factory skill](skills/deck-factory/SKILL.md).
+
+**One line in. A deck worth presenting out.**
+
+</div>
