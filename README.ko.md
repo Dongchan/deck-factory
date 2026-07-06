@@ -5,7 +5,7 @@
 
 # deck-factory
 
-**말할 내용 한 줄 → 발표급 다크 에디토리얼 HTML 덱.**
+**말할 내용 한 줄 → 발표급 다크/페이퍼 에디토리얼 HTML 덱.**
 
 [![Stars](https://img.shields.io/github/stars/kimsh-1/deck-factory?style=flat&color=6E7BF2&labelColor=08090A)](https://github.com/kimsh-1/deck-factory/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-6E7BF2?style=flat&labelColor=08090A)](LICENSE)
@@ -29,7 +29,7 @@
 
 ## 이게 뭔가
 
-발표 전날 밤을 떠올려 보라. 텍스트 박스를 밀고, 회색 카드와 씨름하고, 뒷자리에서는 읽히지도 않을 글씨를 줄이고 있다. **deck-factory**는 그 노동을 디자인 시스템으로 대체한다. 무엇을 말하고 싶은지 한 문장만 주면, 발표의 앞면 — 거대 숫자, 4모서리 크롬, hairline 구조, 아마추어 박스 0개의 다크 에디토리얼 덱 — 을 지어낸다. Apple·Linear·Stripe 키노트가 실제로 보이는 그 방식으로.
+발표 전날 밤을 떠올려 보라. 텍스트 박스를 밀고, 회색 카드와 씨름하고, 뒷자리에서는 읽히지도 않을 글씨를 줄이고 있다. **deck-factory**는 그 노동을 디자인 시스템으로 대체한다. 무엇을 말하고 싶은지 한 문장만 주면, 발표의 앞면 — 거대 숫자, 4모서리 크롬, hairline 구조, 아마추어 박스 0개의 에디토리얼 덱 — 을 지어낸다. 기본은 Apple·Linear·Stripe 키노트에 가까운 다크 톤이고, 보고서·문서·출력형 브리프는 paper-light 프로파일로 전환된다.
 
 지금 검증된 실물은 **프리미엄 슬라이드 12장 + 모션그래픽 영상 3편**, 전부 이 디자인 시스템으로 지었다. 아래의 생성 파이프라인은 이걸 끝에서 끝까지 자동화하는 로드맵이다.
 
@@ -44,6 +44,12 @@
 
 # 3. 한 문장으로 호출
 /deck-factory "시리즈A IR 덱 12장, 우리 리텐션 곡선이 이기는 이유"
+
+# 문서형 브리프는 자동으로 light profile 선택
+/deck-factory "이사회 보고서 10장, 2분기 리텐션 분석"
+
+# 명시 override도 가능
+/deck-factory "제안서 8장, profile: light"
 ```
 
 > 플러그인 마켓플레이스 설치가 의도된 경로다. 디자인 시스템과 스킬은 실물이며 바로 쓸 수 있고, 완전 자동화된 원커맨드 파이프라인은 연결 작업 중이다([작동 방식](#작동-방식) 참조).
@@ -52,10 +58,11 @@
 
 | | |
 |---|---|
-| **다크 에디토리얼 디자인 시스템** | near-black `#08090A` 캔버스, 라벤더블루 `#6E7BF2` + 시안 `#43C7F4` 액센트, Pretendard, 거대 숫자. |
+| **다크 + paper-light 프로파일** | 기본 near-black `#08090A`, 문서형 paper `#F7F4EC`, 라벤더블루 `#6E7BF2` 계열 액센트, Pretendard, 거대 숫자. |
 | **`no_box` · 거대 숫자 · 4모서리 크롬** | 회색 채움 카드 없음 — 구조는 hairline과 surface 래더에서 나온다. 120px+ 스탯 숫자에 value > label > context 위계. |
 | **품질 게이트 — 설계 기준** | 6개 가중 카테고리(타이포·구조·신뢰·데이터시각화·컬러·정렬)에 걸친 47개 결정론 검수, 90점 합격선, 하드페일 7종. 자동채점은 캘리브레이션 대기 중이며, 미달 덱이 조용히 `final`로 나가지 못하도록 게이트가 설계돼 있다. |
 | **실제 크로미움 렌더** | 슬라이드는 HTML/CSS로 조판되고 실제 브라우저 엔진으로 렌더된다 — 보이는 그대로 export된다. |
+| **공유용 PDF 경량화 기본값** | Chrome PDF 원본은 보관용, `*-lite.pdf` 경량본은 기본 공유용 산출물. |
 | **8개 스타일 프리셋** | `apple` · `linear` · `notion` · `stripe` · `vercel` · `krds` · `toss-principles` · `kr-pick`. |
 | **CJK 안전** | `keep-all` 줄바꿈과 한글 break 규칙 — 음절 중간에서 글자가 깨지지 않는다. |
 
@@ -89,7 +96,7 @@
 3. **compose** — 고정된 레이아웃 어휘에서 슬라이드를 결정론적으로 조립(모델은 콘텐츠만, 코드가 좌표·색·z를 소유).
 4. **grade** — 품질 게이트 실행; 합격선 미만은 `draft`로 격리되고 절대 조용히 승격되지 않는다.
 5. **render** — 실제 크로미움 엔진으로 조판·페인트.
-6. **export** — PNG / PDF / PPTX 산출.
+6. **export** — PNG / PDF / PPTX 산출. 공유용 PDF는 기본으로 `*-lite.pdf` 경량본을 만든다.
 
 storyline부터 render/export까지는 인큐베이터에 동작하는 코드로 존재하며, 엔드투엔드 자동채점과 최종 마감 패스가 남은 캘리브레이션 작업이다.
 
@@ -97,7 +104,7 @@ storyline부터 render/export까지는 인큐베이터에 동작하는 코드로
 
 전체 룩은 강제되는 몇 개의 토큰으로 환원된다 — 스킬이 정본이다:
 
-- **캔버스** — `--bg-0: #08090A`(순흑 금지, near-black), 드롭섀도 대신 깊이를 주는 surface 래더 `#101113 → #1A1B1E → #232427`.
+- **캔버스** — dark는 `--bg-0: #08090A`(순흑 금지, near-black), light는 `--bg-0: #F7F4EC`(paper). 둘 다 드롭섀도 대신 surface 래더와 hairline으로 깊이를 준다.
 - **액센트** — 라벤더블루 `#6E7BF2`와 시안 `#43C7F4`, 슬라이드당 액센트 1곳.
 - **잉크** — `#FFFFFF` / `#A1A1A6` / `#6B6B70`, 3단 전경 위계.
 - **타입** — Pretendard, display에 공격적 음수 트래킹, 슬라이드당 폰트 크기 ≤ 3종.
@@ -118,7 +125,7 @@ deck-factory/
 └── incubator/               # 파이프라인 코드: deck-grader, deck-tokens, deck-editor
 ```
 
-**커스터마이징:** 프리셋을 고르거나(`/deck-factory "… preset: linear"`), 스킬의 스타일시트에서 토큰 값을 편집해 팔레트를 재조정한다. 프리셋은 구조와 시그니처 장치를 바꾸며, 색은 항상 토큰 변수를 통해 해석된다.
+**커스터마이징:** 프리셋을 고르거나(`/deck-factory "… preset: linear"`), 프로파일을 명시하거나(`/deck-factory "… profile: light"`), 스킬의 스타일시트에서 토큰 값을 편집해 팔레트를 재조정한다. 프리셋은 구조와 시그니처 장치를 바꾸며, 색은 항상 토큰 변수를 통해 해석된다.
 
 ## 크레딧 & 라이선스
 

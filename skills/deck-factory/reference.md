@@ -16,6 +16,8 @@ SKILL.md의 8규칙·절차를 실제로 구현하는 토큰·컴포넌트·렌�
 | accent | `--accent` / `--accent-2` | `#6E7BF2` / `#8B95FF` |
 | accent tint / glow / cyan | `--accent-soft`/`--glow`/`--cyan` | `rgba(110,123,242,.12)` / `#4C63E6` / `#43C7F4` |
 | delta | `--pos` / `--neg` | `#3FB984` / `#E5695B` |
+| theme effects | `--grain-opacity`/`--grain-blend`/`--glow-opacity` | `.035` / `overlay` / `.55` |
+| component internals | `--mark-shadow`/`--code-highlight`/`--mock-*` | 프로파일별 shadow·inset·mock surface |
 
 - 다크에서 **유일한 테두리 = 알파화이트 hairline**. 카드 배경은 채우기가 아니라 surface 래더에서 한 단 올린 것.
 - accent는 슬라이드당 1곳. delta 색은 슬라이드당 ≤2종.
@@ -81,14 +83,64 @@ cover · chapter · statement · bullets · two-col · cards-3 · data-split · 
 
 ## 8. 라이트/문서 프로파일 전환
 
-기본은 다크. 라이트 트랙이 필요하면 값만 갈아끼운다(골격·컴포넌트는 동일):
-`--bg-0:#F7F4EC`(paper) / `--ink:#1A1A1A` / hairline `rgba(0,0,0,.08)` / surface 래더는 어둡게 대신 **밝게 한 단씩**. 라이트에선 음수 트래킹 과하게·blob 그라디언트 금지, grain opacity 더 낮게. accent는 채도를 살짝 낮춘 값으로.
+기본은 다크. 문서형·보고서형·출력형 브리프는 같은 골격과 컴포넌트에 light token만 얹는다.
+
+사용법:
+
+```html
+<body data-theme="light">
+  <section class="slide">…</section>
+</body>
+```
+
+혼합 테스트나 특정 슬라이드만 전환할 때:
+
+```html
+<section class="slide" data-theme="light">…</section>
+```
+
+선택 우선순위:
+
+1. 명시 `theme: light` / `profile: light` → light 강제.
+2. 명시 `theme: dark` / `profile: dark` → dark 강제.
+3. 자동 감지 — 문서·보고서·제안서·출력·프린트·핸드아웃·화이트페이퍼·이사회·공공·학술, 또는 report/proposal/document/print/handout/whitepaper/board memo/academic/government 신호면 light.
+4. 그 외는 dark.
+
+Light token:
+
+| 역할 | 토큰 | 값 |
+|---|---|---|
+| 캔버스 | `--bg-0` | `#F7F4EC` paper |
+| surface 래더 | `--bg-1/2/3` | `#EFE9DC` · `#E6DECF` · `#DCD2C0` |
+| ink / body / mute / faint | `--ink/--body/--mute/--faint` | `#1A1A1A` · `#4C4A45` · `#747066` · `#C7BDAA` |
+| hairline | `--line` / `--line-strong` | `rgba(26,26,26,.10)` / `.18` |
+| accent | `--accent` / `--accent-2` | `#5662CC` / `#4852B8` |
+| accent tint / glow / cyan | `--accent-soft`/`--glow`/`--cyan` | `rgba(86,98,204,.10)` / `#8790D8` / `#147D9D` |
+| delta | `--pos` / `--neg` | `#237A54` / `#B94A3C` |
+| theme effects | `--grain-opacity`/`--grain-blend`/`--glow-opacity` | `.018` / `multiply` / `.18` |
+
+Light QA:
+
+- surface는 밝은 한지/문서처럼 보여야지 흰 웹앱 대시보드처럼 보이면 안 된다.
+- hairline은 알파블랙이고, 채운 회색 카드로 구조를 만들지 않는다.
+- display 음수 트래킹은 유지하되 과하게 조이지 않는다.
+- glow와 grain은 dark보다 낮게. blob 장식은 금지.
+- 본문 대비는 `--body` on `--bg-0` 기준 4.5:1 이상이어야 한다.
 
 ## 9. WSL / 헤드리스 크로미움 렌더
 
 - 각 slide-NN.html을 1920×1080 뷰포트로 캡처: `chromium --headless --window-size=1920,1080 --screenshot=out.png --default-background-color=00000000 file://…/slide-01.html`. Playwright(`page.set_viewport_size({width:1920,height:1080})` → `page.screenshot`)가 더 안정적.
 - **폰트가 안 뜨면**(WSL에 Pretendard/Geist 미설치) 렌더가 폴백 폰트로 나가 트래킹·줄바꿈이 다 틀어진다. 해결: (a) 시스템에 폰트 설치 후 `fonts.css`에서 `local()` 참조, 또는 (b) `fonts.css`에 woff2를 **base64 data URI로 임베드**(`@font-face { src: url(data:font/woff2;base64,…) }`) — 파일 경로/CORS/캐시 문제를 원천 제거. 프리미엄 덱은 임베드 방식을 권장.
 - PNG 후 PDF: 슬라이드 PNG들을 순서대로 합치거나, print CSS(`@page{size:1920px 1080px;margin:0}` + `-webkit-print-color-adjust:exact`)로 크로미움 `--print-to-pdf`.
+- **공유용 PDF는 기본 경량화**: Chrome PDF 원본은 폰트 subset·색상 프로필 때문에 커질 수 있다. PDF를 만든 뒤 스킬 helper를 실행해 `*-lite.pdf`를 기본 전달물로 삼는다.
+
+```bash
+skills/deck-factory/scripts/compact-pdf.sh out/deck.pdf
+```
+
+  - 기본 preset은 `ebook`이며 보통 발표 공유용에 충분하다.
+  - 더 작게 필요하면 세 번째 인자로 `screen`, 인쇄 품질을 더 남기려면 `printer`.
+  - Ghostscript가 없으면 원본 PDF를 유지하되, 최종 보고에 경량화 미실행을 명시한다.
 - 렌더 후 반드시 합격 체크리스트(SKILL.md)로 눈검수 — near-black 여부, 거대숫자 높이, 한글 깨짐, accent 개수.
 
 ## 10. 지향 파이프라인 (로드맵 — 자동 아님)
