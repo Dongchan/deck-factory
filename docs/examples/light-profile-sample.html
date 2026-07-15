@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1920, initial-scale=1">
+  <title>deck-factory light profile sample</title>
+  <link rel="stylesheet" href="../../skills/deck-factory/assets/styles.css">
+  <style>
+    body { height: auto; }
+    .slide { page-break-after: always; }
+    .frame { padding-bottom: 170px; }
+    .sample-hero {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      align-items: center;
+      gap: 96px;
+      min-height: 100%;
+    }
+    .sample-paper {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 44px 0;
+    }
+    .sample-rule { width: 100%; height: 1px; background: var(--line); margin: 34px 0; }
+    .sample-bar {
+      height: 18px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--glow));
+    }
+    .sample-bar + .sample-bar { margin-top: 24px; opacity: .64; }
+    .sample-bar:nth-child(3) { width: 72%; }
+    .sample-bar:nth-child(4) { width: 48%; }
+  </style>
+</head>
+<body data-theme="light">
+  <section class="slide">
+    <div class="bg">
+      <div class="hairgrid"></div>
+      <div class="bg-grain"></div>
+      <div class="glow" style="right: 120px; top: 90px; width: 520px; height: 520px;"></div>
+    </div>
+    <div class="deck-brand"><div class="mark"></div><div class="wm">deck<b>factory</b></div></div>
+    <div class="deck-meta">LIGHT PROFILE · REPORT</div>
+    <div class="deck-author">paper editorial sample</div>
+    <div class="deck-page"><b>01</b> / 03</div>
+    <div class="frame">
+      <div class="sample-hero">
+        <div>
+          <div class="eyebrow ko">자동 프로파일</div>
+          <div class="gap-m"></div>
+          <h1 class="action-title" style="font-size: 96px; max-width: 12ch;">보고서는 종이 위에서 먼저 읽힌다.</h1>
+          <div class="gap-m"></div>
+          <p class="subhead">문서·제안서·이사회 보고서처럼 읽기와 인쇄가 중요한 브리프는 paper-light 토큰으로 전환한다.</p>
+        </div>
+        <div class="sample-paper">
+          <div class="stat">
+            <div class="k">PROFILE</div>
+            <div class="v" style="font-size: 138px;">Light</div>
+            <div class="c">같은 레이아웃 어휘, 다른 캔버스와 hairline.</div>
+          </div>
+          <div class="sample-rule"></div>
+          <div class="sample-bar" style="width: 88%;"></div>
+          <div class="sample-bar" style="width: 66%;"></div>
+          <div class="sample-bar" style="width: 42%;"></div>
+        </div>
+      </div>
+      <p class="tail"><b>명시 override:</b> 브리프에 <span class="chip"><span class="dot"></span>profile: light</span>를 넣으면 자동 감지보다 우선한다.</p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="bg">
+      <div class="hairgrid"></div>
+      <div class="bg-grain"></div>
+    </div>
+    <div class="deck-brand"><div class="mark"></div><div class="wm">deck<b>factory</b></div></div>
+    <div class="deck-meta">KPI · PAPER</div>
+    <div class="deck-author">paper editorial sample</div>
+    <div class="deck-page"><b>02</b> / 03</div>
+    <div class="frame">
+      <div class="spacer"></div>
+      <div class="eyebrow ko">스탯 슬라이드</div>
+      <div class="gap-l"></div>
+      <div class="stat-row">
+        <div class="stat">
+          <div class="k">READABILITY</div>
+          <div class="v">4.5<small>+</small></div>
+          <div class="c">본문 대비는 paper 캔버스에서도 AA 기준을 넘긴다.</div>
+        </div>
+        <div class="stat">
+          <div class="k">ACCENT</div>
+          <div class="v">1<small>곳</small></div>
+          <div class="c">시그널 색은 하나의 주장에만 쓴다.</div>
+        </div>
+        <div class="stat">
+          <div class="k">BOXES</div>
+          <div class="v">0</div>
+          <div class="c">구조는 채움 카드가 아니라 hairline에서 나온다.</div>
+        </div>
+      </div>
+      <p class="tail">light profile은 웹앱 대시보드가 아니라 <b>프린트 가능한 에디토리얼 덱</b>이어야 한다.</p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="bg">
+      <div class="hairgrid"></div>
+      <div class="bg-grain"></div>
+    </div>
+    <div class="deck-brand"><div class="mark"></div><div class="wm">deck<b>factory</b></div></div>
+    <div class="deck-meta">FLOW · AUTO DETECT</div>
+    <div class="deck-author">paper editorial sample</div>
+    <div class="deck-page"><b>03</b> / 03</div>
+    <div class="frame">
+      <div class="spacer"></div>
+      <div class="eyebrow ko">선택 규칙</div>
+      <div class="gap-m"></div>
+      <h2 class="action-title">명시값이 먼저고, 문서 신호가 그다음이다.</h2>
+      <div class="gap-l"></div>
+      <div class="flow">
+        <div class="node on"><div class="n">01</div><div class="t">Override</div><div class="d">theme/profile 값이 있으면 그대로 따른다.</div></div>
+        <div class="node"><div class="n">02</div><div class="t">Detect</div><div class="d">보고서·문서·출력·proposal·handout 신호를 찾는다.</div></div>
+        <div class="node"><div class="n">03</div><div class="t">Default</div><div class="d">신호가 없으면 기존 dark editorial로 간다.</div></div>
+      </div>
+      <p class="tail">골격은 유지한다. 바뀌는 것은 토큰, grain, glow, surface 래더다.</p>
+    </div>
+  </section>
+</body>
+</html>
